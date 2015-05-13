@@ -43,14 +43,11 @@ public class PathFinder {
   if(solutionCoordinates != null){
    mazeSolution = readMaze(fileName);
    System.out.println("Solution Coordinates:");
-   int lineCount = 1;
+
    for (int i = counter-1; i >= 0; i--) {
     Position solutionPosition = solutionCoordinates[i];
     System.out.print("[" +solutionPosition.i + "][" + solutionPosition.j + "], ");
-    /*if (lineCount % 7 == 0){
-     System.out.println("");
-    }*/
-    lineCount++;
+
     mazeSolution[solutionPosition.i][solutionPosition.j] = 'X';
    }
    System.out.println("\n");
@@ -91,7 +88,7 @@ public class PathFinder {
  public static Position[] stackSearch(char[][] maze) {
   
   int mazeLength = maze.length;
-  //System.out.println(mazeLength);
+ 
   int row = 0;
   int column = 0;
   char value = '0';
