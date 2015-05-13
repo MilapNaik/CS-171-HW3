@@ -3,18 +3,21 @@
       CODE WRITTEN BY OTHER STUDENTS. Milap Naik
       */
 
+// file is broken make sure to fix. Position should refer to --fixed
+
 import java.io.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayDeque;
 
 
-class Position1 {
+class Position {
  public int i; // row
  public int j; // column
  public char val; // 1, 0, or 'X'
  public Position previous;
 
- Position1(int a, int b, char c) {
+ Position(int a, int b, char c) {
   i = a;
   j = b;
   val = c;
@@ -44,9 +47,9 @@ public class PathFinder {
    for (int i = counter-1; i >= 0; i--) {
     Position solutionPosition = solutionCoordinates[i];
     System.out.print("[" +solutionPosition.i + "][" + solutionPosition.j + "], ");
-    if (lineCount % 7 == 0){
+    /*if (lineCount % 7 == 0){
      System.out.println("");
-    }
+    }*/
     lineCount++;
     mazeSolution[solutionPosition.i][solutionPosition.j] = 'X';
    }
@@ -88,6 +91,7 @@ public class PathFinder {
  public static Position[] stackSearch(char[][] maze) {
   
   int mazeLength = maze.length;
+  //System.out.println(mazeLength);
   int row = 0;
   int column = 0;
   char value = '0';
@@ -101,6 +105,7 @@ public class PathFinder {
   Position[] solutionPath = new Position[2 * mazeLength * mazeLength];
 
   positionStack.push(currentPosition);
+
   maze[0][0] = 'X';
   numElements++;
   
@@ -330,13 +335,18 @@ public class PathFinder {
   Scanner scanner;
   try {
    scanner = new Scanner(new FileInputStream(filename));
-   scanner.close();
   } catch (IOException ex) {
    System.err.println("*** Invalid filename: " + filename);
    return null;
   }
-
-  int N = scanner.nextInt();
+  
+  int N = 0;
+  try{
+  
+  N = scanner.nextInt();
+  }catch (InputMismatchException err) {
+	    System.out.print(err.getMessage()); //try to find out specific reason.
+  }
   scanner.nextLine();
   maze = new char[N][N];
   int i = 0;
@@ -350,6 +360,7 @@ public class PathFinder {
    if (j != N) {
     System.err.println("*** Invalid line: " + i
       + " has wrong # columns: " + j);
+    scanner.close();
     return null;
    }
    i++;
@@ -357,8 +368,10 @@ public class PathFinder {
   if (i != N) {
    System.err.println("*** Invalid file: has wrong number of rows: "
      + i);
+   scanner.close();
    return null;
   }
+  scanner.close();
   return maze;
  }
 
